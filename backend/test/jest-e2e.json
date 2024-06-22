@@ -18,6 +18,9 @@
     ],
     "^@pipe/(.*)$": [
       "<rootDir>/../src/common/pipes/$1"
+    ],
+    "^@factories/(.*)$": [
+      "<rootDir>/factories/$1"
     ]
   }
 }

@@ -37,6 +37,7 @@ describe('CharacterService', () => {
           description: '',
           createdAt: new Date(),
           updatedAt: new Date(),
+          planetId: 1,
         },
       ];
       prisma.character.findMany.mockResolvedValue(characters);
@@ -47,6 +48,9 @@ describe('CharacterService', () => {
       expect(prisma.character.findMany).toHaveBeenCalledWith({
         skip: 0,
         take: 10,
+        include: {
+          planet: true,
+        },
       });
     });
   });
@@ -59,12 +63,16 @@ describe('CharacterService', () => {
         description: '',
         createdAt: new Date(),
         updatedAt: new Date(),
+        planetId: 1,
       };
       prisma.character.findUnique.mockResolvedValue(character);
 
       expect(await service.getCharacterById(1)).toEqual(character);
       expect(prisma.character.findUnique).toHaveBeenCalledWith({
         where: { id: 1 },
+        include: {
+          planet: true,
+        },
       });
     });
   });
@@ -79,6 +87,7 @@ describe('CharacterService', () => {
         id: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
+        planetId: 1,
         ...createCharacterDto,
       };
       prisma.character.create.mockResolvedValue(character);
@@ -88,6 +97,9 @@ describe('CharacterService', () => {
       );
       expect(prisma.character.create).toHaveBeenCalledWith({
         data: createCharacterDto,
+        include: {
+          planet: true,
+        },
       });
     });
   });
@@ -102,6 +114,7 @@ describe('CharacterService', () => {
         id: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
+        planetId: 1,
         ...updateCharacterDto,
       };
       prisma.character.update.mockResolvedValue(character);
@@ -112,6 +125,9 @@ describe('CharacterService', () => {
       expect(prisma.character.update).toHaveBeenCalledWith({
         where: { id: 1 },
         data: updateCharacterDto,
+        include: {
+          planet: true,
+        },
       });
     });
   });
@@ -124,12 +140,16 @@ describe('CharacterService', () => {
         description: '',
         createdAt: new Date(),
         updatedAt: new Date(),
+        planetId: 1,
       };
       prisma.character.delete.mockResolvedValue(character);
 
       expect(await service.deleteCharacter(1)).toEqual(character);
       expect(prisma.character.delete).toHaveBeenCalledWith({
         where: { id: 1 },
+        include: {
+          planet: true,
+        },
       });
     });
   });

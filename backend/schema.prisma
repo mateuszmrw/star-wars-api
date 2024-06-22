@@ -8,9 +8,17 @@ generator client {
 }
 
 model Character {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
   description String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  planetId    Int?
+  planet      Planet?   @relation(fields: [planetId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Planet {
+  id         Int        @id @default(autoincrement())
+  name       String     @unique
+  characters Character[]
 }

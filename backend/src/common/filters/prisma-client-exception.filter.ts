@@ -27,6 +27,17 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
         });
         break;
       }
+      case 'P2003': {
+        console.log({ exc: exception.meta });
+        const status = HttpStatus.INTERNAL_SERVER_ERROR;
+        response.status(status).json({
+          statusCode: status,
+          message:
+            'Foreign key constraint failed on the field(s): ' +
+              exception.meta?.field_name || 'UNKNOWN',
+        });
+        break;
+      }
       default:
         super.catch(exception, host);
         break;

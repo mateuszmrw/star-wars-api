@@ -1,4 +1,12 @@
-import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsInt,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 import { CreateCharacterDto } from './create-character.dto';
 
 export class UpdateCharacterDto extends CreateCharacterDto {
@@ -12,4 +20,10 @@ export class UpdateCharacterDto extends CreateCharacterDto {
   @IsString()
   @MaxLength(255)
   readonly description: string;
+
+  @IsOptional()
+  @IsNumber()
+  @IsInt()
+  @IsPositive()
+  readonly planetId?: number;
 }

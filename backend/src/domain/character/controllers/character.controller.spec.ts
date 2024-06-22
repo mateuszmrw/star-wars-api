@@ -37,6 +37,7 @@ describe('CharacterController', () => {
           description: 'Jedi',
           createdAt: new Date(),
           updatedAt: new Date(),
+          planetId: 1,
         },
       ];
       service.getAllCharacters.mockResolvedValue(result);
@@ -56,6 +57,7 @@ describe('CharacterController', () => {
         description: 'Jedi',
         createdAt: new Date(),
         updatedAt: new Date(),
+        planetId: 1,
       };
       service.getCharacterById.mockResolvedValue(result);
 
@@ -84,6 +86,7 @@ describe('CharacterController', () => {
         ...dto,
         createdAt: new Date(),
         updatedAt: new Date(),
+        planetId: 1,
       };
       service.createCharacter.mockResolvedValue(result);
 
@@ -103,6 +106,7 @@ describe('CharacterController', () => {
         ...dto,
         createdAt: new Date(),
         updatedAt: new Date(),
+        planetId: 1,
       };
       service.updateCharacter.mockResolvedValue(result);
 
@@ -119,6 +123,7 @@ describe('CharacterController', () => {
         description: 'Jedi',
         createdAt: new Date(),
         updatedAt: new Date(),
+        planetId: 1,
       };
       service.deleteCharacter.mockResolvedValue(result);
 

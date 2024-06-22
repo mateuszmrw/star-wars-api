@@ -1,6 +1,9 @@
 import {
+  IsInt,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
+  IsPositive,
   IsString,
   MaxLength,
   MinLength,
@@ -17,4 +20,10 @@ export class CreateCharacterDto {
   @IsString()
   @MaxLength(255)
   readonly description: string;
+
+  @IsOptional()
+  @IsNumber()
+  @IsInt()
+  @IsPositive()
+  readonly planetId?: number;
 }

@@ -21,7 +21,8 @@
       "@db/*": ["src/prisma/*"],
       "@domain/*": ["src/domain/*"],
       "@dto/*": ["src/common/dto/*"],
-      "@pipe/*": ["src/common/pipes/*"]
+      "@pipe/*": ["src/common/pipes/*"],
+      "@factories/*": ["test/factories/*"]
     }
   }
 }
