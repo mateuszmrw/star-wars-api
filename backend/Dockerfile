@@ -1,10 +1,12 @@
-FROM node:latest
+FROM node:latest AS builder
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+COPY migrations ./migrations/
 
 RUN yarn install
+RUN npx prisma generate
 
 COPY . .
 

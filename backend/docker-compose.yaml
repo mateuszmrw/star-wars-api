@@ -1,7 +1,9 @@
 services:
-  app:
-    build: .
+ db:
+    image: 'postgres'
     ports:
-      - "3000:3000"
+      - '5432:5432'
     environment:
-      - NODE_ENV=production
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_DB: 'starwars'
