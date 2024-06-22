@@ -49,6 +49,7 @@ describe('CharacterService', () => {
         skip: 0,
         take: 10,
         include: {
+          episodes: true,
           planet: true,
         },
       });
@@ -71,6 +72,7 @@ describe('CharacterService', () => {
       expect(prisma.character.findUnique).toHaveBeenCalledWith({
         where: { id: 1 },
         include: {
+          episodes: true,
           planet: true,
         },
       });
@@ -96,8 +98,14 @@ describe('CharacterService', () => {
         character,
       );
       expect(prisma.character.create).toHaveBeenCalledWith({
-        data: createCharacterDto,
+        data: {
+          ...createCharacterDto,
+          episodes: {
+            connect: undefined,
+          },
+        },
         include: {
+          episodes: true,
           planet: true,
         },
       });
@@ -126,6 +134,7 @@ describe('CharacterService', () => {
         where: { id: 1 },
         data: updateCharacterDto,
         include: {
+          episodes: true,
           planet: true,
         },
       });
@@ -148,6 +157,7 @@ describe('CharacterService', () => {
       expect(prisma.character.delete).toHaveBeenCalledWith({
         where: { id: 1 },
         include: {
+          episodes: true,
           planet: true,
         },
       });

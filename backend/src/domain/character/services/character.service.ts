@@ -16,6 +16,7 @@ export class CharacterService {
       ...params,
       include: {
         planet: true,
+        episodes: true,
       },
     });
   }
@@ -25,6 +26,7 @@ export class CharacterService {
       where: { id },
       include: {
         planet: true,
+        episodes: true,
       },
     });
     if (!character) {
@@ -34,10 +36,15 @@ export class CharacterService {
   }
 
   async createCharacter(data: CreateCharacterDto): Promise<Character> {
+    const { episodeIds, ...rest } = data;
     return this.prisma.character.create({
-      data,
+      data: {
+        ...rest,
+        episodes: { connect: episodeIds?.map((id) => ({ id })) },
+      },
       include: {
         planet: true,
+        episodes: true,
       },
     });
   }
@@ -51,6 +58,7 @@ export class CharacterService {
       data,
       include: {
         planet: true,
+        episodes: true,
       },
     });
   }
@@ -60,6 +68,7 @@ export class CharacterService {
       where: { id },
       include: {
         planet: true,
+        episodes: true,
       },
     });
   }

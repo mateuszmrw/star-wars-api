@@ -32,7 +32,7 @@ export class PlanetController {
   ): Promise<Planet | null> {
     const planet = await this.planetService.getPlanetById(id);
     if (!planet) {
-      throw new NotFoundException(`Character with it ${id} was not found`);
+      throw new NotFoundException(`Planet with it ${id} was not found`);
     }
     return planet;
   }

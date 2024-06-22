@@ -13,6 +13,7 @@ model Character {
   description String?
   planetId    Int?
   planet      Planet?   @relation(fields: [planetId], references: [id])
+  episodes    Episode[] 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -21,4 +22,10 @@ model Planet {
   id         Int        @id @default(autoincrement())
   name       String     @unique
   characters Character[]
+}
+
+model Episode {
+  id          Int         @id @default(autoincrement())
+  title       String      @unique
+  characters  Character[]
 }

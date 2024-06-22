@@ -26,4 +26,9 @@ export class UpdateCharacterDto extends CreateCharacterDto {
   @IsInt()
   @IsPositive()
   readonly planetId?: number;
+
+  @IsOptional()
+  @IsInt({ each: true })
+  @IsPositive({ each: true })
+  readonly episodeIds?: number[];
 }
