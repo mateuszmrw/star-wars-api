@@ -28,7 +28,6 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
         break;
       }
       case 'P2003': {
-        console.log({ exc: exception.meta });
         const status = HttpStatus.INTERNAL_SERVER_ERROR;
         response.status(status).json({
           statusCode: status,
