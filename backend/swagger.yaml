@@ -192,6 +192,35 @@ paths:
           description: Planet not found.
       tags:
         - planets
+    put:
+      operationId: PlanetController_updatePlanet
+      summary: Update a planet
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: The ID of the planet to update
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePlanetDto'
+      responses:
+        '200':
+          description: The planet has been successfully updated.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/PlanetResponse'
+        '404':
+          description: Planet not found.
+        '409':
+          description: Primary key constraint was failed.
+      tags:
+        - planets
     delete:
       operationId: PlanetController_deletePlanet
       summary: Delete a planet
@@ -285,6 +314,35 @@ paths:
           description: Episode not found.
       tags:
         - episodes
+    put:
+      operationId: EpisodeController_updateEpisode
+      summary: Update a episode
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: The ID of the episode to update
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEpisodeDto'
+      responses:
+        '200':
+          description: The episode has been successfully updated.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/EpisodeResponse'
+        '404':
+          description: Episode not found.
+        '409':
+          description: Primary key constraint was failed.
+      tags:
+        - episodes
     delete:
       operationId: EpisodeController_deleteEpisode
       summary: Delete a episode
@@ -339,7 +397,6 @@ components:
           format: date-time
           description: The last update date
         planet:
-          type: object
           $ref: '#/components/schemas/PlanetResponse'
         episodes:
           type: array
@@ -415,6 +472,12 @@ components:
           example: Earth
       required:
         - name
+    UpdatePlanetDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Earth
     CreateEpisodeDto:
       type: object
       properties:
@@ -423,3 +486,9 @@ components:
           example: Episode 1
       required:
         - title
+    UpdateEpisodeDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Episode 1

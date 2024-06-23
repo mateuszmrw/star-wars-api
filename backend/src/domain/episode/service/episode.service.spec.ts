@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { EpisodeService } from './episode.service';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
-import { PrismaClient } from '@prisma/client';
+import { Episode, PrismaClient } from '@prisma/client';
 import { PrismaService } from '@db/prisma.service';
 
 describe('EpisodeService', () => {
@@ -80,6 +80,27 @@ describe('EpisodeService', () => {
       expect(await service.createEpisode(createEpisodeDto)).toEqual(episode);
       expect(prisma.episode.create).toHaveBeenCalledWith({
         data: createEpisodeDto,
+      });
+    });
+  });
+
+  describe('updateEpisode', () => {
+    it('should update and return a updated episode', async () => {
+      const updateEpisodeDto = {
+        title: 'Episode 1',
+      };
+      const episode: Episode = {
+        id: 1,
+        ...updateEpisodeDto,
+      };
+      prisma.episode.update.mockResolvedValue(episode);
+
+      expect(await service.updateEpisode(episode.id, updateEpisodeDto)).toEqual(
+        episode,
+      );
+      expect(prisma.episode.update).toHaveBeenCalledWith({
+        where: { id: 1 },
+        data: updateEpisodeDto,
       });
     });
   });

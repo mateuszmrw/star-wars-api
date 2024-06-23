@@ -8,12 +8,14 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { PaginationTransformPipe } from '@pipe/pagination-transform.pipe';
 import { Episode } from '@prisma/client';
 import { EpisodeService } from '../service/episode.service';
 import { CreateEpisodeDto } from '@dto/episode/create-episode.dto';
+import { UpdateEpisodeDto } from '@dto/episode/update-episode.dto';
 
 @Controller('episodes')
 export class EpisodeController {
@@ -40,6 +42,14 @@ export class EpisodeController {
   @Post()
   createEpisode(@Body() episode: CreateEpisodeDto): Promise<Episode> {
     return this.episodeService.createEpisode(episode);
+  }
+
+  @Put(':id')
+  updateEpisode(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() episode: UpdateEpisodeDto,
+  ) {
+    return this.episodeService.updateEpisode(id, episode);
   }
 
   @Delete(':id')

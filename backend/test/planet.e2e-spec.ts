@@ -6,6 +6,7 @@ import { PrismaService } from '@db/prisma.service';
 import { HttpAdapterHost } from '@nestjs/core';
 import { PrismaClientExceptionFilter } from '../src/common/filters/prisma-client-exception.filter';
 import { createPlanetFactory } from '@factories/planet.factory';
+import { UpdatePlanetDto } from '@dto/planet/update-planet.dto';
 
 describe('PlanetController (e2e)', () => {
   let app: INestApplication;
@@ -158,6 +159,45 @@ describe('PlanetController (e2e)', () => {
             'name must be shorter than or equal to 255 characters',
           );
         });
+    });
+  });
+
+  describe('/planets/:id (PUT)', () => {
+    it('should update and return the updated planets', async () => {
+      const planet = await prisma.planet.create({
+        data: createPlanetFactory(),
+      });
+
+      const updatePlanetDto: UpdatePlanetDto = {
+        name: 'Earth',
+      };
+
+      return request(app.getHttpServer())
+        .put(`/planets/${planet.id}`)
+        .send(updatePlanetDto)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.name).toEqual(updatePlanetDto.name);
+        });
+    });
+
+    it('should return 409 if planet with name already exists', async () => {
+      const planet = await prisma.planet.create({
+        data: createPlanetFactory(),
+      });
+
+      const planet2 = await prisma.planet.create({
+        data: createPlanetFactory(),
+      });
+
+      const updatePlanetDto: UpdatePlanetDto = {
+        name: planet2.name,
+      };
+
+      return request(app.getHttpServer())
+        .put(`/planets/${planet.id}`)
+        .send(updatePlanetDto)
+        .expect(409);
     });
   });
 

@@ -7,6 +7,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { Planet } from '@prisma/client';
@@ -35,6 +36,14 @@ export class PlanetController {
       throw new NotFoundException(`Planet with it ${id} was not found`);
     }
     return planet;
+  }
+
+  @Put(':id')
+  updatePlanet(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() planet: CreatePlanetDto,
+  ): Promise<Planet> {
+    return this.planetService.updatePlanet(id, planet);
   }
 
   @Post()

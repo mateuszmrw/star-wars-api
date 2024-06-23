@@ -7,6 +7,7 @@ import { HttpAdapterHost } from '@nestjs/core';
 import { PrismaClientExceptionFilter } from '../src/common/filters/prisma-client-exception.filter';
 import { createEpisodeFactory } from '@factories/episode.factory';
 import { CreateEpisodeDto } from '@dto/episode/create-episode.dto';
+import { UpdateEpisodeDto } from '@dto/episode/update-episode.dto';
 
 describe('EpisodeController (e2e)', () => {
   let app: INestApplication;
@@ -159,6 +160,45 @@ describe('EpisodeController (e2e)', () => {
             'title must be shorter than or equal to 255 characters',
           );
         });
+    });
+  });
+
+  describe('/episodes/:id (PUT)', () => {
+    it('should update and return the updated episode', async () => {
+      const episode = await prisma.episode.create({
+        data: createEpisodeFactory(),
+      });
+
+      const updateEpisodeDto: UpdateEpisodeDto = {
+        title: 'Episode 1',
+      };
+
+      return request(app.getHttpServer())
+        .put(`/episodes/${episode.id}`)
+        .send(updateEpisodeDto)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.title).toEqual(updateEpisodeDto.title);
+        });
+    });
+
+    it('should return 409 if planet with name already exists', async () => {
+      const episode = await prisma.episode.create({
+        data: createEpisodeFactory(),
+      });
+
+      const episode2 = await prisma.episode.create({
+        data: createEpisodeFactory(),
+      });
+
+      const updateEpisodeDto: UpdateEpisodeDto = {
+        title: episode2.title,
+      };
+
+      return request(app.getHttpServer())
+        .put(`/episodes/${episode.id}`)
+        .send(updateEpisodeDto)
+        .expect(409);
     });
   });
 

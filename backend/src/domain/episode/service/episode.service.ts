@@ -1,5 +1,6 @@
 import { PrismaService } from '@db/prisma.service';
 import { CreateEpisodeDto } from '@dto/episode/create-episode.dto';
+import { UpdateEpisodeDto } from '@dto/episode/update-episode.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Episode } from '@prisma/client';
 
@@ -31,6 +32,12 @@ export class EpisodeService {
     return this.prisma.episode.create({ data });
   }
 
+  async updateEpisode(id: number, data: UpdateEpisodeDto): Promise<Episode> {
+    return this.prisma.episode.update({
+      where: { id },
+      data,
+    });
+  }
   async deleteEpisode(id: number): Promise<Episode> {
     return this.prisma.episode.delete({ where: { id } });
   }

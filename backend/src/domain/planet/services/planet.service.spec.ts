@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '@db/prisma.service';
-import { PrismaClient } from '@prisma/client';
+import { Planet, PrismaClient } from '@prisma/client';
 import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
 import { PlanetService } from './planet.service';
+import { CreatePlanetDto } from '@dto/planet/create-planet.dto';
 
 describe('PlanetService', () => {
   let service: PlanetService;
@@ -30,7 +31,7 @@ describe('PlanetService', () => {
 
   describe('getAllPlanets', () => {
     it('should return an array of planet', async () => {
-      const planets = [
+      const planets: Planet[] = [
         {
           id: 1,
           name: 'planets',
@@ -50,7 +51,7 @@ describe('PlanetService', () => {
 
   describe('getPlanetById', () => {
     it('should return a planet by ID', async () => {
-      const planet = {
+      const planet: Planet = {
         id: 1,
         name: 'planets',
       };
@@ -65,10 +66,10 @@ describe('PlanetService', () => {
 
   describe('createPlanet', () => {
     it('should create and return a new planet', async () => {
-      const createPlanetDto = {
+      const createPlanetDto: CreatePlanetDto = {
         name: 'Earth',
       };
-      const planet = {
+      const planet: Planet = {
         id: 1,
         ...createPlanetDto,
       };
@@ -77,6 +78,27 @@ describe('PlanetService', () => {
       expect(await service.createPlanet(createPlanetDto)).toEqual(planet);
       expect(prisma.planet.create).toHaveBeenCalledWith({
         data: createPlanetDto,
+      });
+    });
+  });
+
+  describe('updatePlanet', () => {
+    it('should update and return a updated planet', async () => {
+      const updatePlanetDto = {
+        name: 'Earth',
+      };
+      const planet: Planet = {
+        id: 1,
+        ...updatePlanetDto,
+      };
+      prisma.planet.update.mockResolvedValue(planet);
+
+      expect(await service.updatePlanet(planet.id, updatePlanetDto)).toEqual(
+        planet,
+      );
+      expect(prisma.planet.update).toHaveBeenCalledWith({
+        where: { id: 1 },
+        data: updatePlanetDto,
       });
     });
   });
