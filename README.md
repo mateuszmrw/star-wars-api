@@ -7,7 +7,7 @@ API for Star Wars characters created using:
 
 ## Installation
 
-### Every command should be done in backend folder
+### Every command should be run in the backend folder
 
 ```bash
 $ yarn install
