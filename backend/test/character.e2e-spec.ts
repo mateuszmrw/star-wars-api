@@ -7,6 +7,8 @@ import { HttpAdapterHost } from '@nestjs/core';
 import { PrismaClientExceptionFilter } from '../src/common/filters/prisma-client-exception.filter';
 import { createCharacterFactory } from '@factories/character.factory';
 import { createPlanetFactory } from '@factories/planet.factory';
+import { createEpisodeFactory } from '@factories/episode.factory';
+import { CreateCharacterDto } from '@dto/character/create-character.dto';
 
 describe('CharacterController (e2e)', () => {
   let app: INestApplication;
@@ -131,6 +133,31 @@ describe('CharacterController (e2e)', () => {
         .expect((res) => {
           expect(res.body.name).toEqual(createCharacterDto.name);
           expect(res.body.description).toEqual(createCharacterDto.description);
+        });
+    });
+
+    it('should create and return a new character with planet and episode', async () => {
+      const episodeDto = createEpisodeFactory();
+      const episode = await prisma.episode.create({ data: episodeDto });
+      const planetDto = createPlanetFactory();
+      const planet = await prisma.planet.create({ data: planetDto });
+
+      const createCharacterDto: CreateCharacterDto = {
+        name: 'Luke Skywalker',
+        description: 'He is a jedi',
+        planetId: planet.id,
+        episodeIds: [episode.id],
+      };
+
+      return request(app.getHttpServer())
+        .post('/characters')
+        .send(createCharacterDto)
+        .expect(201)
+        .expect((res) => {
+          expect(res.body.name).toEqual(createCharacterDto.name);
+          expect(res.body.description).toEqual(createCharacterDto.description);
+          expect(res.body.planet).toEqual(planet);
+          expect(res.body.episodes).toEqual([episode]);
         });
     });
 
