@@ -1,0 +1,425 @@
+openapi: 3.0.0
+paths:
+  /characters:
+    get:
+      operationId: CharacterController_getAllCharacters
+      summary: Get all characters
+      parameters:
+        - name: skip
+          required: false
+          in: query
+          description: Number of records to skip
+          schema:
+            type: number
+        - name: take
+          required: false
+          in: query
+          description: Number of records to take
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Return all characters.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CharacterResponse'
+      tags:
+        - characters
+    post:
+      operationId: CharacterController_createCharacter
+      summary: Create a new character
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCharacterDto'
+      responses:
+        '201':
+          description: The character has been successfully created.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/CharacterResponse'
+        '409':
+          description: Primary key constraint was failed.
+      tags:
+        - characters
+  /characters/{id}:
+    get:
+      operationId: CharacterController_getCharacterById
+      summary: Get a character by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: The ID of the character
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Return the character with the given ID.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/CharacterResponse'
+        '404':
+          description: Character not found.
+      tags:
+        - characters
+    put:
+      operationId: CharacterController_updateCharacter
+      summary: Update a character
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: The ID of the character to update
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCharacterDto'
+      responses:
+        '200':
+          description: The character has been successfully updated.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/CharacterResponse'
+        '404':
+          description: Character not found.
+        '409':
+          description: Primary key constraint was failed.
+      tags:
+        - characters
+    delete:
+      operationId: CharacterController_deleteCharacter
+      summary: Delete a character
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: The ID of the character to delete
+          schema:
+            type: number
+      responses:
+        '200':
+          description: The character has been successfully deleted.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/CharacterResponse'
+        '404':
+          description: Character not found.
+      tags:
+        - characters
+  /planets:
+    get:
+      operationId: PlanetController_getAllPlanets
+      summary: Get all planets
+      parameters:
+        - name: skip
+          required: false
+          in: query
+          description: Number of records to skip
+          schema:
+            type: number
+        - name: take
+          required: false
+          in: query
+          description: Number of records to take
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Return all planets.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlanetResponse'
+      tags:
+        - planets
+    post:
+      operationId: PlanetController_createPlanet
+      summary: Create a new planet
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePlanetDto'
+      responses:
+        '201':
+          description: The planet has been successfully created.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/PlanetResponse'
+        '409':
+          description: Primary key constraint was failed.
+      tags:
+        - planets
+  /planets/{id}:
+    get:
+      operationId: PlanetController_getPlanetById
+      summary: Get a planet by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: The ID of the planet
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Return the planet with the given ID.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/PlanetResponse'
+        '404':
+          description: Planet not found.
+      tags:
+        - planets
+    delete:
+      operationId: PlanetController_deletePlanet
+      summary: Delete a planet
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: The ID of the planet to delete
+          schema:
+            type: number
+      responses:
+        '200':
+          description: The planet has been successfully deleted.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/PlanetResponse'
+        '404':
+          description: Planet not found.
+      tags:
+        - planets
+  /episodes:
+    get:
+      operationId: EpisodeController_getAllEpisodes
+      summary: Get all episodes
+      parameters:
+        - name: skip
+          required: false
+          in: query
+          description: Number of records to skip
+          schema:
+            type: number
+        - name: take
+          required: false
+          in: query
+          description: Number of records to take
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Return all episodes.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EpisodeResponse'
+      tags:
+        - episodes
+    post:
+      operationId: EpisodeController_createEpisode
+      summary: Create a new episode
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEpisodeDto'
+      responses:
+        '201':
+          description: The episode has been successfully created.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/EpisodeResponse'
+        '409':
+          description: Primary key constraint was failed.
+      tags:
+        - episodes
+  /episodes/{id}:
+    get:
+      operationId: EpisodeController_getEpisodeById
+      summary: Get a episode by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: The ID of the episode
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Return the episode with the given ID.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/EpisodeResponse'
+
+        '404':
+          description: Episode not found.
+      tags:
+        - episodes
+    delete:
+      operationId: EpisodeController_deleteEpisode
+      summary: Delete a episode
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: The ID of the episode to delete
+          schema:
+            type: number
+      responses:
+        '200':
+          description: The episode has been successfully deleted.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/EpisodeResponse'
+        '404':
+          description: Episode not found.
+      tags:
+        - episodes
+info:
+  title: Star Wars API
+  description: API to manage Star Wars characters information
+  version: '0.1'
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas:
+    CharacterResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The ID of the character
+        name:
+          type: string
+          description: The name of the character
+        description:
+          type: string
+          description: The description of the character
+        planetId:
+          type: integer
+          description: The ID of the planet
+        createdAt:
+          type: string
+          format: date-time
+          description: The creation date
+        updatedAt:
+          type: string
+          format: date-time
+          description: The last update date
+        planet:
+          type: object
+          $ref: '#/components/schemas/PlanetResponse'
+        episodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/EpisodeResponse'
+    PlanetResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Earth
+        id:
+          type: integer
+          description: The ID of the planet
+    EpisodeResponse:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Episode 1
+        id:
+          type: integer
+          description: The ID of the episode
+    CreateCharacterDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Luke Skywalker
+        description:
+          type: string
+          example: He is a Jedi
+        planetId:
+          type: number
+          example: 1
+          description: The ID of the planet
+        episodeIds:
+          type: array
+          items: 
+            type: number
+          example:
+            - 1
+            - 2
+          description: Array of episode IDs
+      required:
+        - name
+    UpdateCharacterDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Luke Skywalker
+        description:
+          type: string
+          example: He is a Jedi
+        planetId:
+          type: number
+          example: 1
+          description: The ID of the planet
+        episodeIds:
+          type: array
+          items: 
+            type: number
+          example:
+            - 1
+            - 2
+          description: Array of episode IDs
+    CreatePlanetDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Earth
+      required:
+        - name
+    CreateEpisodeDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Episode 1
+      required:
+        - title
